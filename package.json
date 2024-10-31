@@ -36,7 +36,7 @@
     "@typescript-eslint/parser": "^6.19.0",
     "autoprefixer": "^10.4.20",
     "eslint": "^8",
-    "eslint-config-next": "14.2.5",
+    "eslint-config-next": "15.0.2",
     "eslint-plugin-next-on-pages": "^1.13.5",
     "eslint-plugin-react": "^7.33.2",
     "postcss": "^8",
