@@ -20,12 +20,11 @@ export default function InstallButton({
     <>
       <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
         {pkg.versions[0].packageManager === "" &&
-        pkg.versions[0].source === "github" ? (
+          pkg.versions[0].source === "github" ? (
           <Link
             isExternal
-            href={`https://${pkg.identifier}/releases/tag/${
-              pkg.versions[0].version
-            }`}
+            href={`https://${pkg.identifier}/releases/tag/${pkg.versions[0].version
+              }`}
             size="sm"
           >
             <Button className="text-lg font-bold text-white bg-blue-500 dark:bg-blue-800 dark:text-gray-200 px-4 py-2 rounded-lg flex items-center">
@@ -45,7 +44,6 @@ export default function InstallButton({
 
       <InstallModal
         isOpen={isOpen}
-        isVersionSelected={false}
         pkg={pkg}
         versionStr={pkg.versions[0].version}
         onOpen={onOpen}
