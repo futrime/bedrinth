@@ -145,7 +145,6 @@ const HoverButton = ({
           </Button>
           <InstallModal
             isOpen={isOpen}
-            isVersionSelected={true}
             pkg={pkg}
             versionStr={versionStr}
             onOpen={onOpen}

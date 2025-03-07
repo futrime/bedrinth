@@ -28,8 +28,7 @@ function commandBuilder(
     } else if (verInfo.source == "github") {
       // pip--github
       return Result.Ok(
-        `pip install git+https://${pkg.identifier}${
-          version ? `@${version}` : ""
+        `pip install git+https://${pkg.identifier}${version ? `@${version}` : ""
         }`,
       );
     }
@@ -44,13 +43,11 @@ function commandBuilder(
 export default function InstallModal({
   pkg,
   versionStr,
-  isVersionSelected,
   isOpen,
   onOpenChange,
 }: {
   pkg: GetPackageResponse;
   versionStr: string;
-  isVersionSelected: boolean;
   isOpen: boolean;
   onOpen: () => void;
   onOpenChange: (isOpen: boolean) => void;
@@ -64,7 +61,7 @@ export default function InstallModal({
   const installCmd = commandBuilder(
     version as Version,
     pkg,
-    isVersionSelected ? versionStr : "",
+    versionStr,
   );
 
   return (
