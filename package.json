@@ -13,7 +13,7 @@
     "cf-typegen": "wrangler types --env-interface CloudflareEnv env.d.ts"
   },
   "dependencies": {
-    "@iconify/react": "^5.0.2",
+    "@iconify/react": "^5.2.0",
     "@nextui-org/react": "^2.4.8",
     "@react-aria/ssr": "^3.9.6",
     "@react-aria/visually-hidden": "3.8.12",
