@@ -19,8 +19,8 @@ export function TabsContent({ tab }: { tab: string }) {
         replace(`/?${params.toString()}`);
       }}
     >
-      <Tab key="hotness" title="Most Stars" />
-      <Tab key="updated" title="Recently Newest" />
+      <Tab key="hotness" title="Stars" />
+      <Tab key="updated" title="Date Updated" />
     </Tabs>
   );
 }
