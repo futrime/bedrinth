@@ -57,6 +57,6 @@
     "tailwindcss": "3.4.3",
     "typescript": "5.6.3",
     "vercel": "^37.14.0",
-    "wrangler": "^3.84.1"
+    "wrangler": "^4.8.0"
   }
 }
