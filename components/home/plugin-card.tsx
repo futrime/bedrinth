@@ -2,9 +2,9 @@
 
 import type { SearchPackagesResponse } from "../../lib/api";
 
-import { Card, CardBody, CardFooter } from "@nextui-org/card";
-import { Chip } from "@nextui-org/chip";
-import { Image } from "@nextui-org/image";
+import { Card, CardBody, CardFooter } from "@heroui/card";
+import { Chip } from "@heroui/chip";
+import { Image } from "@heroui/image";
 import { IoMdStarOutline } from "react-icons/io";
 import { MdUpdate } from "react-icons/md";
 

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
-import { Spinner } from "@nextui-org/react";
+import { Spinner } from "@heroui/react";
 import { debounce } from "lodash";
 
 import { PaginationComponent } from "../components/home/pagination";

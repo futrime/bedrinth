@@ -1,11 +1,11 @@
 "use client";
 import type { GetPackageResponse } from "@/lib/api";
 
-import { useDisclosure } from "@nextui-org/modal";
-import { Button } from "@nextui-org/button";
+import { useDisclosure } from "@heroui/modal";
+import { Button } from "@heroui/button";
 import { motion } from "framer-motion";
 import { GrInstall, GrDownload } from "react-icons/gr";
-import { Link } from "@nextui-org/link";
+import { Link } from "@heroui/link";
 
 import InstallModal from "./install-modal";
 

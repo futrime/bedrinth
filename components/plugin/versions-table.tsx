@@ -8,17 +8,17 @@ import {
   TableColumn,
   TableRow,
   TableCell,
-} from "@nextui-org/table";
-import { Pagination } from "@nextui-org/pagination";
+} from "@heroui/table";
+import { Pagination } from "@heroui/pagination";
 import { useState } from "react";
 import { formatDistanceToNow } from "date-fns";
 import { IoToday } from "react-icons/io5";
-import { Chip } from "@nextui-org/chip";
-import { Button } from "@nextui-org/react";
+import { Chip } from "@heroui/chip";
+import { Button } from "@heroui/react";
 import { GrCube, GrInstall, GrDownload } from "react-icons/gr";
 import { motion } from "framer-motion";
-import { useDisclosure } from "@nextui-org/modal";
-import { Link } from "@nextui-org/link";
+import { useDisclosure } from "@heroui/modal";
+import { Link } from "@heroui/link";
 
 import InstallModal from "./install-modal";
 export default function VersionCard({

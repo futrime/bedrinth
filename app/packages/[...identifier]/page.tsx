@@ -1,11 +1,11 @@
 "use client";
 import { redirect } from "next/navigation";
-import { Image } from "@nextui-org/image";
+import { Image } from "@heroui/image";
 import { useEffect, useState, useCallback } from "react";
 import { FaStar } from "react-icons/fa6";
-import { Spinner } from "@nextui-org/react";
+import { Spinner } from "@heroui/react";
 import { motion } from "framer-motion";
-import { Link } from "@nextui-org/link";
+import { Link } from "@heroui/link";
 
 import { GetPackageResponse } from "@/lib/api";
 import InstallButton from "@/components/plugin/install-button";
