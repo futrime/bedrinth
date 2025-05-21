@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, use } from "react";
 import { motion } from "framer-motion";
 import { Spinner } from "@heroui/react";
 import { debounce } from "lodash";
@@ -21,16 +21,24 @@ type Color = "violet" | "yellow" | "blue" | "cyan" | "green" | "pink";
 
 const colors: Color[] = ["violet", "yellow", "blue", "cyan", "green", "pink"];
 
-export default function Page({
-  searchParams,
-}: Readonly<{
-  searchParams?: {
-    q?: string;
-    page?: number;
-    sort?: "hotness" | "updated";
-    platform?: string;
-  };
-}>) {
+export default function Page(
+  props: Readonly<{
+    searchParams: Promise<{
+      q?: string;
+      page?: number;
+      sort?: "hotness" | "updated";
+      platform?: string;
+    }>;
+  }>,
+) {
+  const searchParams:
+    | {
+        q?: string;
+        page?: number;
+        sort?: "hotness" | "updated";
+        platform?: string;
+      }
+    | undefined = use(props.searchParams);
   const [index, setIndex] = useState(0);
   const [colorIndex, setColorIndex] = useState(0);
   const [packages, setPackages] = useState<SearchPackagesResponse | null>(null);

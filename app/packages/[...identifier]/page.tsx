@@ -1,7 +1,7 @@
 "use client";
 import { redirect } from "next/navigation";
 import { Image } from "@heroui/image";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, use } from "react";
 import { FaStar } from "react-icons/fa6";
 import { Spinner } from "@heroui/react";
 import { motion } from "framer-motion";
@@ -14,7 +14,10 @@ import SideBar from "@/components/plugin/side-bar";
 import { fetchReadme } from "@/lib/readme-fetcher";
 import { tryGetPackage } from "@/lib/api";
 
-export default function Page({ params }: { params: { identifier: string[] } }) {
+export default function Page(props: {
+  params: Promise<{ identifier: string[] }>;
+}) {
+  const params = use(props.params);
   const [pkg, setPkg] = useState<GetPackageResponse | undefined>(undefined);
   const [readme, setReadme] = useState<any>(undefined);
   const [, setError] = useState<boolean | undefined>(undefined);
