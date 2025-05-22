@@ -17,9 +17,7 @@ import { InputSort } from "@/components/home/input";
 
 const words = ["levilamina mods", "endstone plugins"];
 
-type Color = "violet" | "yellow" | "blue" | "cyan" | "green" | "pink";
-
-const colors: Color[] = ["violet", "yellow", "blue", "cyan", "green", "pink"];
+const colors = ["violet", "yellow", "blue", "cyan", "green", "pink"] as const;
 
 export default function Page(
   props: Readonly<{

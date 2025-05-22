@@ -8,28 +8,44 @@ import { Image } from "@heroui/image";
 import { IoMdStarOutline } from "react-icons/io";
 import { MdUpdate } from "react-icons/md";
 
-type Color = "primary" | "secondary" | "success" | "warning" | "danger";
-
-const colors: Color[] = [
+const colors = [
   "primary",
   "secondary",
   "success",
   "warning",
   "danger",
-];
+] as const;
 
 type ResultItem = SearchPackagesResponse["items"][number];
 
 export default function PluginCard({ result }: { result: ResultItem }) {
   let colorIndex = 0;
 
-  const getNextColor = (): Color => {
+  const getNextColor = () => {
     const color = colors[colorIndex];
 
     colorIndex = (colorIndex + 1) % colors.length;
 
     return color;
   };
+
+  const categoryTags = new Map<string, string[]>();
+  const otherTag: string[] = [];
+
+  for (const item of result.tags) {
+    const category = /^[a-z0-9-]+:[a-z0-9-]+$/.test(item)
+      ? item.split(":")[0]
+      : "";
+
+    if (category !== "") {
+      if (!categoryTags.has(category)) {
+        categoryTags.set(category, []);
+      }
+      categoryTags.get(category)!.push(item.split(":")[1]);
+    } else {
+      otherTag.push(item);
+    }
+  }
 
   const formatDate = (date: string) => {
     return new Date(date).toLocaleDateString("en-US", {
@@ -82,12 +98,24 @@ export default function PluginCard({ result }: { result: ResultItem }) {
                   </p>
                 </div>
                 <div className="mt-[10px] flex gap-4 items-center flex-wrap">
-                  {result.tags.map((item) => (
+                  {Array.from(
+                    categoryTags.entries().map(([key, values]) => (
+                      <Chip
+                        key={key}
+                        color={getNextColor()}
+                        size="sm"
+                        variant="solid"
+                      >
+                        {`${key}:${values.join(" | ")}`}
+                      </Chip>
+                    )),
+                  )}
+                  {otherTag.map((item) => (
                     <Chip
                       key={item}
                       color={getNextColor()}
                       size="sm"
-                      variant="flat"
+                      variant="bordered"
                     >
                       {item}
                     </Chip>
