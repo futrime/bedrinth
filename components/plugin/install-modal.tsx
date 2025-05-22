@@ -1,7 +1,7 @@
 "use client";
 import type { GetPackageResponse } from "@/lib/api";
 
-import { Modal, ModalContent, ModalHeader, ModalBody } from "@nextui-org/modal";
+import { Modal, ModalContent, ModalHeader, ModalBody } from "@heroui/modal";
 
 import CodeBlock from "./code-block";
 
@@ -28,7 +28,8 @@ function commandBuilder(
     } else if (verInfo.source == "github") {
       // pip--github
       return Result.Ok(
-        `pip install git+https://${pkg.identifier}${version ? `@${version}` : ""
+        `pip install git+https://${pkg.identifier}${
+          version ? `@${version}` : ""
         }`,
       );
     }
@@ -58,11 +59,7 @@ export default function InstallModal({
     version?.releasedAt || "",
   ).toLocaleString();
 
-  const installCmd = commandBuilder(
-    version as Version,
-    pkg,
-    versionStr,
-  );
+  const installCmd = commandBuilder(version as Version, pkg, versionStr);
 
   return (
     <>

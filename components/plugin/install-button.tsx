@@ -1,11 +1,11 @@
 "use client";
 import type { GetPackageResponse } from "@/lib/api";
 
-import { useDisclosure } from "@nextui-org/modal";
-import { Button } from "@nextui-org/button";
+import { useDisclosure } from "@heroui/modal";
+import { Button } from "@heroui/button";
 import { motion } from "framer-motion";
 import { GrInstall, GrDownload } from "react-icons/gr";
-import { Link } from "@nextui-org/link";
+import { Link } from "@heroui/link";
 
 import InstallModal from "./install-modal";
 
@@ -20,11 +20,12 @@ export default function InstallButton({
     <>
       <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
         {pkg.versions[0].packageManager === "" &&
-          pkg.versions[0].source === "github" ? (
+        pkg.versions[0].source === "github" ? (
           <Link
             isExternal
-            href={`https://${pkg.identifier}/releases/tag/${pkg.versions[0].version
-              }`}
+            href={`https://${pkg.identifier}/releases/tag/${
+              pkg.versions[0].version
+            }`}
             size="sm"
           >
             <Button className="text-lg font-bold text-white bg-blue-500 dark:bg-blue-800 dark:text-gray-200 px-4 py-2 rounded-lg flex items-center">

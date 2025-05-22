@@ -1,4 +1,4 @@
-import { nextui } from "@nextui-org/theme";
+import { heroui } from "@heroui/theme";
 import typography from "@tailwindcss/typography";
 
 /** @type {import('tailwindcss').Config} */
@@ -6,7 +6,7 @@ export default {
   content: [
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
@@ -17,5 +17,5 @@ export default {
     },
   },
   darkMode: "class",
-  plugins: [nextui(), typography],
+  plugins: [heroui(), typography],
 };

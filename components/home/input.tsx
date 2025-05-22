@@ -1,6 +1,6 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Input } from "@nextui-org/input";
+import { Input } from "@heroui/input";
 import { Icon } from "@iconify/react";
 import React from "react";
 

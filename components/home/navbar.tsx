@@ -1,6 +1,6 @@
 "use client";
 
-import type { NavbarProps } from "@nextui-org/react";
+import type { NavbarProps } from "@heroui/react";
 
 import React from "react";
 import {
@@ -14,7 +14,7 @@ import {
   Link,
   Divider,
   cn,
-} from "@nextui-org/react";
+} from "@heroui/react";
 
 import { ThemeSwitch } from "@/components/theme-switch";
 import { BedrinthLogo } from "@/components/icons";

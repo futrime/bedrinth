@@ -1,11 +1,11 @@
 "use client";
 import { redirect } from "next/navigation";
-import { Image } from "@nextui-org/image";
-import { useEffect, useState, useCallback } from "react";
+import { Image } from "@heroui/image";
+import { useEffect, useState, useCallback, use } from "react";
 import { FaStar } from "react-icons/fa6";
-import { Spinner } from "@nextui-org/react";
+import { Spinner } from "@heroui/react";
 import { motion } from "framer-motion";
-import { Link } from "@nextui-org/link";
+import { Link } from "@heroui/link";
 
 import { GetPackageResponse } from "@/lib/api";
 import InstallButton from "@/components/plugin/install-button";
@@ -14,7 +14,10 @@ import SideBar from "@/components/plugin/side-bar";
 import { fetchReadme } from "@/lib/readme-fetcher";
 import { tryGetPackage } from "@/lib/api";
 
-export default function Page({ params }: { params: { identifier: string[] } }) {
+export default function Page(props: {
+  params: Promise<{ identifier: string[] }>;
+}) {
+  const params = use(props.params);
   const [pkg, setPkg] = useState<GetPackageResponse | undefined>(undefined);
   const [readme, setReadme] = useState<any>(undefined);
   const [, setError] = useState<boolean | undefined>(undefined);

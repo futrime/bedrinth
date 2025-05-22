@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, use } from "react";
 import { motion } from "framer-motion";
-import { Spinner } from "@nextui-org/react";
+import { Spinner } from "@heroui/react";
 import { debounce } from "lodash";
 
 import { PaginationComponent } from "../components/home/pagination";
@@ -17,20 +17,26 @@ import { InputSort } from "@/components/home/input";
 
 const words = ["levilamina mods", "endstone plugins"];
 
-type Color = "violet" | "yellow" | "blue" | "cyan" | "green" | "pink";
+const colors = ["violet", "yellow", "blue", "cyan", "green", "pink"] as const;
 
-const colors: Color[] = ["violet", "yellow", "blue", "cyan", "green", "pink"];
-
-export default function Page({
-  searchParams,
-}: Readonly<{
-  searchParams?: {
-    q?: string;
-    page?: number;
-    sort?: "hotness" | "updated";
-    platform?: string;
-  };
-}>) {
+export default function Page(
+  props: Readonly<{
+    searchParams: Promise<{
+      q?: string;
+      page?: number;
+      sort?: "hotness" | "updated";
+      platform?: string;
+    }>;
+  }>,
+) {
+  const searchParams:
+    | {
+        q?: string;
+        page?: number;
+        sort?: "hotness" | "updated";
+        platform?: string;
+      }
+    | undefined = use(props.searchParams);
   const [index, setIndex] = useState(0);
   const [colorIndex, setColorIndex] = useState(0);
   const [packages, setPackages] = useState<SearchPackagesResponse | null>(null);

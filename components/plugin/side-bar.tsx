@@ -2,10 +2,10 @@
 import type { GetPackageResponse } from "@/lib/api";
 
 import { motion } from "framer-motion";
-import { Card } from "@nextui-org/card";
-import { User } from "@nextui-org/user";
-import { Link } from "@nextui-org/link";
-import { Chip } from "@nextui-org/chip";
+import { Card } from "@heroui/card";
+import { User } from "@heroui/user";
+import { Link } from "@heroui/link";
+import { Chip } from "@heroui/chip";
 import { useMemo } from "react";
 
 export default function SideBar({

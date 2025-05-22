@@ -1,8 +1,8 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Select, SelectItem } from "@nextui-org/select";
+import { Select, SelectItem } from "@heroui/select";
 import React from "react";
-import { Selection } from "@nextui-org/react";
+import { Selection } from "@heroui/react";
 
 const statusOptions = [
   { label: "LeviLamina", key: "levilamina" },
