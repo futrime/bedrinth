@@ -6,6 +6,7 @@ import { FaStar } from "react-icons/fa6";
 import { Spinner } from "@nextui-org/react";
 import { motion } from "framer-motion";
 import { Link } from "@nextui-org/link";
+import { Helmet } from "react-helmet";
 
 import { GetPackageResponse } from "@/lib/api";
 import InstallButton from "@/components/plugin/install-button";
@@ -54,6 +55,24 @@ export default function Page({ params }: { params: { identifier: string[] } }) {
         </div>
       ) : (
         <div>
+          <Helmet>
+            <title>
+              Bedrinth - {pkg?.author} / {pkg?.name}
+            </title>
+            <meta
+              name="description"
+              content={pkg?.description || "No description available."}
+            />
+            <meta
+              property="og:title"
+              content={`${pkg?.author} / ${pkg?.name}`}
+            />
+            <meta
+              property="og:description"
+              content={pkg?.description || "No description available."}
+            />
+            <meta property="og:type" content="website" />
+          </Helmet>
           <div className="flex flex-col space-y-4">
             <motion.div
               animate={{ y: 0, opacity: 1 }}
