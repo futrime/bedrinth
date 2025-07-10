@@ -17,6 +17,7 @@ export default function Error({ error }: { error: Error; reset: () => void }) {
         <title>
           Bedrinth - Error
         </title>
+        <meta name="robots" content="noindex" />
       </Helmet>
       <h2 className="text-2xl mb-4">Something went wrong!</h2>
       <p className="text-lg mb-6">The page will refresh automatically.</p>
