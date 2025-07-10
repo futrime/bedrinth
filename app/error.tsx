@@ -15,7 +15,7 @@ export default function Error({ error }: { error: Error; reset: () => void }) {
     <div className="flex flex-col items-center justify-center h-screen bg-red-100 text-red-700 p-4">
       <Helmet>
         <title>
-          Bedrinth - Error
+          Error - Bedrinth
         </title>
         <meta name="robots" content="noindex" />
       </Helmet>

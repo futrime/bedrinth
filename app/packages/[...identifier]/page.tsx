@@ -57,7 +57,7 @@ export default function Page({ params }: { params: { identifier: string[] } }) {
         <div>
           <Helmet>
             <title>
-              Bedrinth - {pkg?.author} / {pkg?.name}
+              {pkg?.author} / {pkg?.name} - Bedrinth
             </title>
             <meta
               name="description"
@@ -65,7 +65,7 @@ export default function Page({ params }: { params: { identifier: string[] } }) {
             />
             <meta
               property="og:title"
-              content={`${pkg?.author} / ${pkg?.name}`}
+              content={`${pkg?.author} / ${pkg?.name} - Bedrinth`}
             />
             <meta
               property="og:description"
