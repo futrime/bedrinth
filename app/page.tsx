@@ -85,16 +85,13 @@ export default function Page({
     <div className="container mx-auto max-w-7xl px-6 flex-grow">
       <Helmet>
         <title>Bedrinth</title>
+        <meta content="The Minecraft Bedrock mod index" name="description" />
+        <meta content="Bedrinth" property="og:title" />
         <meta
-          name="description"
           content="The Minecraft Bedrock mod index"
-        />
-        <meta property="og:title" content="Bedrinth" />
-        <meta
           property="og:description"
-          content="The Minecraft Bedrock mod index"
         />
-        <meta property="og:type" content="website" />
+        <meta content="website" property="og:type" />
       </Helmet>      
       <div>
         <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">

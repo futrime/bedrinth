@@ -15,6 +15,9 @@ import SideBar from "@/components/plugin/side-bar";
 import { fetchReadme } from "@/lib/readme-fetcher";
 import { tryGetPackage } from "@/lib/api";
 
+const FALLBACK_DESCRIPTION = "No description available."
+
+
 export default function Page({ params }: { params: { identifier: string[] } }) {
   const [pkg, setPkg] = useState<GetPackageResponse | undefined>(undefined);
   const [readme, setReadme] = useState<any>(undefined);
@@ -60,18 +63,18 @@ export default function Page({ params }: { params: { identifier: string[] } }) {
               {pkg?.author} / {pkg?.name} - Bedrinth
             </title>
             <meta
+              content={pkg?.description || FALLBACK_DESCRIPTION}
               name="description"
-              content={pkg?.description || "No description available."}
             />
             <meta
-              property="og:title"
               content={`${pkg?.author} / ${pkg?.name} - Bedrinth`}
+              property="og:title"
             />
             <meta
+              content={pkg?.description || FALLBACK_DESCRIPTION}
               property="og:description"
-              content={pkg?.description || "No description available."}
             />
-            <meta property="og:type" content="website" />
+            <meta content="website" property="og:type" />
           </Helmet>
           <div className="flex flex-col space-y-4">
             <motion.div
