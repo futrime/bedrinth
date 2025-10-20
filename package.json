@@ -19,7 +19,7 @@
     "@react-aria/visually-hidden": "3.8.12",
     "@tailwindcss/typography": "^0.5.15",
     "clsx": "2.1.1",
-    "framer-motion": "~11.1.9",
+    "framer-motion": "~12.23.24",
     "intl-messageformat": "^10.5.0",
     "lodash": "^4.17.21",
     "markdown-navbar": "^1.4.3",
