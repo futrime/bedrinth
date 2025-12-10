@@ -4,6 +4,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Spinner } from "@nextui-org/react";
 import { debounce } from "lodash";
+import { Helmet } from "react-helmet";
 
 import { PaginationComponent } from "../components/home/pagination";
 import PluginCard from "../components/home/plugin-card";
@@ -82,6 +83,16 @@ export default function Page({
 
   return (
     <div className="container mx-auto max-w-7xl px-6 flex-grow">
+      <Helmet>
+        <title>Bedrinth</title>
+        <meta content="The Minecraft Bedrock mod index" name="description" />
+        <meta content="Bedrinth" property="og:title" />
+        <meta
+          content="The Minecraft Bedrock mod index"
+          property="og:description"
+        />
+        <meta content="website" property="og:type" />
+      </Helmet>      
       <div>
         <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
           <motion.div

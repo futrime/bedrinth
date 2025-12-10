@@ -6,6 +6,7 @@ import { FaStar } from "react-icons/fa6";
 import { Spinner } from "@nextui-org/react";
 import { motion } from "framer-motion";
 import { Link } from "@nextui-org/link";
+import { Helmet } from "react-helmet";
 
 import { GetPackageResponse } from "@/lib/api";
 import InstallButton from "@/components/plugin/install-button";
@@ -13,6 +14,9 @@ import PluginTabs from "@/components/plugin/tabs";
 import SideBar from "@/components/plugin/side-bar";
 import { fetchReadme } from "@/lib/readme-fetcher";
 import { tryGetPackage } from "@/lib/api";
+
+const FALLBACK_DESCRIPTION = "No description available."
+
 
 export default function Page({ params }: { params: { identifier: string[] } }) {
   const [pkg, setPkg] = useState<GetPackageResponse | undefined>(undefined);
@@ -54,6 +58,24 @@ export default function Page({ params }: { params: { identifier: string[] } }) {
         </div>
       ) : (
         <div>
+          <Helmet>
+            <title>
+              {pkg?.author} / {pkg?.name} - Bedrinth
+            </title>
+            <meta
+              content={pkg?.description || FALLBACK_DESCRIPTION}
+              name="description"
+            />
+            <meta
+              content={`${pkg?.author} / ${pkg?.name} - Bedrinth`}
+              property="og:title"
+            />
+            <meta
+              content={pkg?.description || FALLBACK_DESCRIPTION}
+              property="og:description"
+            />
+            <meta content="website" property="og:type" />
+          </Helmet>
           <div className="flex flex-col space-y-4">
             <motion.div
               animate={{ y: 0, opacity: 1 }}
