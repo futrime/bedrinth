@@ -1,7 +1,7 @@
 "use client";
 import type { GetPackageResponse } from "@/lib/api";
 
-import { Modal, ModalContent, ModalHeader, ModalBody } from "@nextui-org/modal";
+import { Modal, ModalContent, ModalHeader, ModalBody } from "@heroui/react";
 
 import CodeBlock from "./code-block";
 

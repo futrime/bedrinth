@@ -1,11 +1,11 @@
 "use client";
 import type { GetPackageResponse } from "@/lib/api";
 
-import { Tabs, Tab } from "@nextui-org/react";
+import { Tabs, Tab } from "@heroui/react";
 import { FaLink } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { useState, useCallback, useEffect } from "react";
-import { Card } from "@nextui-org/card";
+import { Card } from "@heroui/react";
 
 import VersionCard from "@/components/plugin/versions-table";
 import Readme from "@/components/plugin/readme";
