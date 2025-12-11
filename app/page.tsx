@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, use } from "react";
 import { motion } from "framer-motion";
-import { Spinner } from "@nextui-org/react";
+import { Spinner } from "@heroui/react";
 import { debounce } from "lodash";
-import { Helmet } from "react-helmet";
+import Head from "next/head";
 
 import { PaginationComponent } from "../components/home/pagination";
 import PluginCard from "../components/home/plugin-card";
@@ -22,16 +22,17 @@ type Color = "violet" | "yellow" | "blue" | "cyan" | "green" | "pink";
 
 const colors: Color[] = ["violet", "yellow", "blue", "cyan", "green", "pink"];
 
-export default function Page({
-  searchParams,
-}: Readonly<{
-  searchParams?: {
-    q?: string;
-    page?: number;
-    sort?: "hotness" | "updated";
-    platform?: string;
-  };
-}>) {
+export default function Page(
+  props: Readonly<{
+    searchParams: Promise<{
+      q?: string;
+      page?: number;
+      sort?: "hotness" | "updated";
+      platform?: string;
+    } | undefined>;
+  }>
+) {
+  const searchParams = use(props.searchParams);
   const [index, setIndex] = useState(0);
   const [colorIndex, setColorIndex] = useState(0);
   const [packages, setPackages] = useState<SearchPackagesResponse | null>(null);
@@ -83,16 +84,13 @@ export default function Page({
 
   return (
     <div className="container mx-auto max-w-7xl px-6 flex-grow">
-      <Helmet>
+      <Head>
         <title>Bedrinth</title>
-        <meta content="The Minecraft Bedrock mod index" name="description" />
-        <meta content="Bedrinth" property="og:title" />
-        <meta
-          content="The Minecraft Bedrock mod index"
-          property="og:description"
-        />
-        <meta content="website" property="og:type" />
-      </Helmet>      
+        <meta name="description" content="The Minecraft Bedrock mod index" />
+        <meta property="og:title" content="Bedrinth" />
+        <meta property="og:description" content="The Minecraft Bedrock mod index" />
+        <meta property="og:type" content="website" />
+      </Head>
       <div>
         <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
           <motion.div

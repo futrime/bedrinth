@@ -1,12 +1,12 @@
 "use client";
 import { redirect } from "next/navigation";
-import { Image } from "@nextui-org/image";
-import { useEffect, useState, useCallback } from "react";
+import { Image } from "@heroui/react";
+import { useEffect, useState, useCallback, use } from "react";
 import { FaStar } from "react-icons/fa6";
-import { Spinner } from "@nextui-org/react";
+import { Spinner } from "@heroui/react";
 import { motion } from "framer-motion";
-import { Link } from "@nextui-org/link";
-import { Helmet } from "react-helmet";
+import { Link } from "@heroui/react";
+import Head from "next/head";
 
 import { GetPackageResponse } from "@/lib/api";
 import InstallButton from "@/components/plugin/install-button";
@@ -18,7 +18,8 @@ import { tryGetPackage } from "@/lib/api";
 const FALLBACK_DESCRIPTION = "No description available."
 
 
-export default function Page({ params }: { params: { identifier: string[] } }) {
+export default function Page(props: { params: Promise<{ identifier: string[] }> }) {
+  const params = use(props.params);
   const [pkg, setPkg] = useState<GetPackageResponse | undefined>(undefined);
   const [readme, setReadme] = useState<any>(undefined);
   const [, setError] = useState<boolean | undefined>(undefined);
@@ -57,25 +58,17 @@ export default function Page({ params }: { params: { identifier: string[] } }) {
           <Spinner color="default" label="Loading" size="lg" />
         </div>
       ) : (
-        <div>
-          <Helmet>
-            <title>
-              {pkg?.author} / {pkg?.name} - Bedrinth
-            </title>
-            <meta
-              content={pkg?.description || FALLBACK_DESCRIPTION}
-              name="description"
-            />
-            <meta
-              content={`${pkg?.author} / ${pkg?.name} - Bedrinth`}
-              property="og:title"
-            />
-            <meta
-              content={pkg?.description || FALLBACK_DESCRIPTION}
-              property="og:description"
-            />
-            <meta content="website" property="og:type" />
-          </Helmet>
+        <>
+          {/* Set metadata dynamically using Next.js Head */}
+          {pkg && (
+            <Head>
+              <title>{pkg.author} / {pkg.name} - Bedrinth</title>
+              <meta name="description" content={pkg.description || FALLBACK_DESCRIPTION} />
+              <meta property="og:title" content={`${pkg.author} / ${pkg.name} - Bedrinth`} />
+              <meta property="og:description" content={pkg.description || FALLBACK_DESCRIPTION} />
+              <meta property="og:type" content="website" />
+            </Head>
+          )}
           <div className="flex flex-col space-y-4">
             <motion.div
               animate={{ y: 0, opacity: 1 }}
@@ -147,7 +140,7 @@ export default function Page({ params }: { params: { identifier: string[] } }) {
               </div>
             </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );
