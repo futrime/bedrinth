@@ -16,7 +16,7 @@
     "@iconify/react": "^5.2.1",
     "@nextui-org/react": "^2.4.8",
     "@react-aria/ssr": "^3.9.6",
-    "@react-aria/visually-hidden": "3.8.12",
+    "@react-aria/visually-hidden": "3.8.29",
     "@tailwindcss/typography": "^0.5.15",
     "clsx": "2.1.1",
     "framer-motion": "~11.1.9",
