@@ -61,7 +61,7 @@ export function FooterComponent() {
         </div>
         <Spacer y={4} /> */}
         <p className="mt-1 text-center text-small text-default-400">
-          &copy; 2024 The LeviMC Team
+          &copy; 2026 The LeviMC Team
         </p>
       </div>
     </footer>
