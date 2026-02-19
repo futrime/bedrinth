@@ -68,15 +68,17 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const classes = cn(baseStyles, variantStyles, sizeStyles, className);
 
     if (asChild) {
-      const child = React.Children.only(props.children) as React.ReactElement;
+      const child = React.Children.only(
+        props.children,
+      ) as React.ReactElement<React.HTMLAttributes<HTMLElement>>;
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { children, ...restProps } = props;
       // eslint-disable-next-line react-hooks/refs
       return React.cloneElement(child, {
+        ...restProps,
         className: cn(classes, child.props.className),
         ref,
-        ...restProps, // Pass down other props (onClick, etc) but NOT children
-      });
+      } as React.HTMLAttributes<HTMLElement> & { ref: React.Ref<HTMLElement> });
     }
 
     return <button className={classes} ref={ref} {...props} />;
