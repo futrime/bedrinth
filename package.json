@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@types/flexsearch": "^0.7.42",
     "@types/mdx": "^2.0.13",
     "@types/node": "^20",
     "@types/react": "^19",
