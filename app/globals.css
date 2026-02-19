@@ -1,4 +1,54 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* GitHub Alert Styles */
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+  border-left: 0.25rem solid;
+  border-radius: 0.25rem;
+}
+
+.markdown-alert-note {
+  border-color: #0969da;
+  background-color: #f8faff;
+  color: #0969da;
+}
+.dark .markdown-alert-note {
+  background-color: #0d1117;
+  /* GitHub dark dim style approximately */
+}
+
+.markdown-alert-tip {
+  border-color: #1a7f37;
+  background-color: #f6fff8;
+  color: #1a7f37;
+}
+
+.markdown-alert-important {
+  border-color: #8250df;
+  background-color: #fbf8ff;
+  color: #8250df;
+}
+
+.markdown-alert-warning {
+  border-color: #9a6700;
+  background-color: #fff8c5;
+  color: #4d2d00;
+}
+
+.markdown-alert-caution {
+  border-color: #d1242f;
+  background-color: #ffebe9;
+  color: #cf222e;
+}
+
+.markdown-alert-title {
+  display: flex;
+  font-weight: bold;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
 
 :root {
   --background: #ffffff;
@@ -8,8 +58,6 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
