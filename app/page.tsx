@@ -8,7 +8,7 @@ import { PackageList } from "@/components/package-list";
 import { Sidebar } from "@/components/sidebar";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import FlexSearch from "flexsearch";
+import MiniSearch from "minisearch";
 import { Loader2 } from "lucide-react";
 
 // FlexSearch doesn't have good TS support by default sometimes
@@ -49,36 +49,23 @@ function IndexPageContent() {
         const data: PackageIndex = await res.json();
         setPackages(data.packages);
 
-        // Initialize FlexSearch
+        // Initialize MiniSearch
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const newIndex: any = new FlexSearch.Document({
-          document: {
-            id: "tooth",
-            index: [
-              {
-                field: "info:name",
-                tokenize: "full",
-              },
-              {
-                field: "info:description",
-                tokenize: "full",
-              },
-              {
-                field: "info:tags",
-                tokenize: "strict",
-              },
-            ],
-            store: true,
-          },
+        const newIndex: any = new MiniSearch({
+          idField: "tooth",
+          fields: ["name", "description", "tags"],
+          storeFields: ["tooth", "info"],
         });
 
         // Add packages to index
-        data.packages.forEach((pkg) => {
-          newIndex.add({
+        newIndex.addAll(
+          data.packages.map((pkg) => ({
             tooth: pkg.tooth,
-            info: pkg.info,
-          });
-        });
+            name: pkg.info.name,
+            description: pkg.info.description,
+            tags: pkg.info.tags.join(" "),
+          }))
+        );
 
         setIndex(newIndex);
         setLoading(false);
@@ -99,18 +86,15 @@ function IndexPageContent() {
     const scores = new Map<string, number>();
 
     if (searchQuery && index) {
-      const searchResults = index.search(searchQuery, { limit: 1000 });
+      const searchResults = index.search(searchQuery, {
+        boost: { name: 3, tags: 2 },
+        prefix: true,
+        fuzzy: 0.2,
+      });
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      searchResults.forEach((fieldResult: any) => {
-        let weight = 1;
-        if (fieldResult.field === "info:name") weight = 3;
-        else if (fieldResult.field === "info:tags") weight = 2;
-
-        fieldResult.result.forEach((id: string, index: number) => {
-          const rankScore = (1000 - index) * weight;
-          scores.set(id, (scores.get(id) || 0) + rankScore);
-        });
+      searchResults.forEach((result: any) => {
+        scores.set(result.id, result.score);
       });
 
       if (searchResults.length > 0) {
