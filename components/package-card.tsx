@@ -21,15 +21,15 @@ export function PackageCard({ pkg }: PackageCardProps) {
     <Card className="flex flex-col h-full transition-all hover:border-gray-400 dark:hover:border-gray-700">
       <CardHeader>
         <div className="flex justify-between items-start gap-4">
-          <div className="flex items-start gap-3">
+          <div className="flex items-start gap-3 min-w-0">
             <Avatar
               src={pkg.info.avatar_url}
               alt={pkg.info.name}
               name={pkg.info.name}
               className="w-10 h-10 rounded-md shrink-0"
             />
-            <div>
-              <CardTitle className="text-xl">
+            <div className="min-w-0">
+              <CardTitle className="text-xl truncate block" title={pkg.info.name}>
                 <Link
                   href={`/packages/${pkg.tooth}`}
                   className="hover:underline"
@@ -37,7 +37,7 @@ export function PackageCard({ pkg }: PackageCardProps) {
                   {pkg.info.name}
                 </Link>
               </CardTitle>
-              <CardDescription className="line-clamp-2 mt-1">
+              <CardDescription className="line-clamp-2 mt-1 break-words">
                 {pkg.info.description}
               </CardDescription>
             </div>
