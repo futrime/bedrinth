@@ -1,47 +1,36 @@
-export const runtime = "edge";
+import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
+import "./globals.css";
 
-import "@/styles/globals.css";
-import { Metadata, Viewport } from "next";
-import clsx from "clsx";
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
 
-import { Providers } from "./providers";
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
 
-import { BasicNavbar } from "@/components/home/navbar";
-import { FooterComponent } from "@/components/home/footer";
-import { fontSans } from "@/config/fonts";
+import { Header } from "@/components/header";
 
 export const metadata: Metadata = {
-  title: "Bedrinth",
-};
-
-export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
-  ],
+  title: "bedrinth",
+  description: "A package index for LeviLamina",
 };
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
-    <html suppressHydrationWarning lang="en">
-      <head />
+    <html lang="en">
       <body
-        className={clsx(
-          "min-h-screen bg-background font-sans antialiased ",
-          fontSans.variable,
-        )}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-50`}
       >
-        <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-          <div className="relative flex flex-col h-screen">
-            <BasicNavbar />
-            <main>{children}</main>
-            <FooterComponent />
-          </div>
-        </Providers>
+        <Header />
+        {children}
       </body>
     </html>
   );
