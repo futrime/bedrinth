@@ -1,6 +1,6 @@
 import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
-import { MDXRemote } from "next-mdx-remote/rsc";
+import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { remarkAlert } from "remark-github-blockquote-alert";
 import { ArrowLeft, Star, Clock, Tag, Box, Github } from "lucide-react";
@@ -150,15 +150,11 @@ export default async function PackageDetailPage({ params }: PageProps) {
             <CardContent className="p-6 md:p-8">
               {readme ? (
                 <div className="prose dark:prose-invert max-w-none prose-headings:font-bold prose-a:text-blue-600 prose-pre:bg-gray-100 dark:prose-pre:bg-gray-800 prose-table:border-collapse prose-th:border prose-td:border prose-th:p-2 prose-td:p-2 prose-img:inline-block prose-img:my-1 prose-img:mr-1 prose-p:my-4">
-                  <MDXRemote
-                    source={readme}
-                    options={{
-                      mdxOptions: {
-                        remarkPlugins: [remarkGfm, remarkAlert],
-                        format: "md",
-                      },
-                    }}
-                  />
+                  <ReactMarkdown
+                    remarkPlugins={[remarkGfm, remarkAlert]}
+                  >
+                    {readme}
+                  </ReactMarkdown>
                 </div>
               ) : (
                 <div className="text-center py-12 text-gray-500">
