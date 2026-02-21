@@ -3,7 +3,7 @@
 import * as React from "react";
 import { useEffect, useState, useMemo, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { Package, PackageIndex } from "@/types";
+import { Package, PackageIndex, normalizePackageIndex } from "@/types";
 import { PackageList } from "@/components/package-list";
 import { Sidebar } from "@/components/sidebar";
 import { Button } from "@/components/ui/button";
@@ -16,6 +16,14 @@ import { Loader2 } from "lucide-react";
 // Since we don't know if @types/flexsearch is present and working well, we'll be careful.
 
 const ITEMS_PER_PAGE = 12;
+const LOADING_SKELETON_KEYS = [
+  "loading-1",
+  "loading-2",
+  "loading-3",
+  "loading-4",
+  "loading-5",
+  "loading-6",
+];
 
 export default function IndexPage() {
   return (
@@ -47,7 +55,8 @@ function IndexPageContent() {
       try {
         const res = await fetch("https://lipr.levimc.org/index.json");
         const data: PackageIndex = await res.json();
-        setPackages(data.packages);
+        const normalizedPackages = normalizePackageIndex(data);
+        setPackages(normalizedPackages);
 
         // Initialize FlexSearch
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -73,7 +82,7 @@ function IndexPageContent() {
         });
 
         // Add packages to index
-        data.packages.forEach((pkg) => {
+        normalizedPackages.forEach((pkg) => {
           newIndex.add({
             tooth: pkg.tooth,
             info: pkg.info,
@@ -221,8 +230,8 @@ function IndexPageContent() {
               <Skeleton className="h-10 w-32" />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[...Array(6)].map((_, i) => (
-                <Skeleton key={i} className="h-48" />
+              {new Array(6).fill(null).map((_, i) => (
+                <Skeleton key={LOADING_SKELETON_KEYS[i]} className="h-48" />
               ))}
             </div>
           </div>

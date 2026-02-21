@@ -16,7 +16,7 @@ interface PackageCardProps {
   pkg: Package;
 }
 
-export function PackageCard({ pkg }: PackageCardProps) {
+export function PackageCard({ pkg }: Readonly<PackageCardProps>) {
   return (
     <Card className="flex flex-col h-full transition-all hover:border-gray-400 dark:hover:border-gray-700">
       <CardHeader>
@@ -31,7 +31,7 @@ export function PackageCard({ pkg }: PackageCardProps) {
             <div className="min-w-0">
               <CardTitle className="text-xl truncate block" title={pkg.info.name}>
                 <Link
-                  href={`/packages/${pkg.tooth}`}
+                  href={`/${pkg.tooth}`}
                   className="hover:underline"
                 >
                   {pkg.info.name}
@@ -67,7 +67,7 @@ export function PackageCard({ pkg }: PackageCardProps) {
             <span>{new Date(pkg.updated).toLocaleDateString()}</span>
           </div>
         </div>
-        <div className="text-xs">{pkg.versions[pkg.versions.length - 1]}</div>
+        <div className="text-xs">{pkg.versions.at(-1)}</div>
       </CardFooter>
     </Card>
   );
