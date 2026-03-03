@@ -14,17 +14,9 @@ const SEARCH_NAME_WEIGHT = 3;
 const SEARCH_TAG_WEIGHT = 2;
 const MAX_RANK_BASE = 1000;
 
-// ---------------------------------------------------------------------------
-// Normalization
-// ---------------------------------------------------------------------------
-
-export function normalizeTooth(tooth: string): string {
-  return tooth.replace(/^github\.com\//i, "");
-}
-
 export function normalizePackageIndex(index: PackageIndex): Package[] {
   return Object.entries(index.packages).map(([tooth, pkg]) => ({
-    tooth: normalizeTooth(tooth),
+    tooth,
     info: {
       ...pkg.info,
       tags: Array.isArray(pkg.info.tags) ? pkg.info.tags : [],
@@ -185,10 +177,13 @@ export function extractTags(packages: Package[]): string[] {
 // ---------------------------------------------------------------------------
 
 export function getPackageManifestUrl(tooth: string, version: string): string {
-  return `${PACKAGE_REGISTRY_URL}/github.com/${normalizeTooth(tooth)}@${version}/tooth.json`;
+  return `${PACKAGE_REGISTRY_URL}/${tooth}@${version}/tooth.json`;
 }
 
 export function getReadmeUrl(tooth: string, version: string): string | null {
   const tag = `v${version}`;
-  return `https://raw.githubusercontent.com/${normalizeTooth(tooth)}/${tag}/README.md`;
+  if (tooth.startsWith("github.com/")) {
+    return `https://raw.githubusercontent.com/${tooth.slice("github.com/".length)}/${tag}/README.md`;
+  }
+  return `https://${tooth}/raw/refs/tags/${tag}/README.md`;
 }
