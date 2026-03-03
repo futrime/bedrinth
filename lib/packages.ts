@@ -18,9 +18,13 @@ const MAX_RANK_BASE = 1000;
 // Normalization
 // ---------------------------------------------------------------------------
 
+export function normalizeTooth(tooth: string): string {
+  return tooth.replace(/^github\.com\//i, "");
+}
+
 export function normalizePackageIndex(index: PackageIndex): Package[] {
   return Object.entries(index.packages).map(([tooth, pkg]) => ({
-    tooth,
+    tooth: normalizeTooth(tooth),
     info: {
       ...pkg.info,
       tags: Array.isArray(pkg.info.tags) ? pkg.info.tags : [],
@@ -181,10 +185,10 @@ export function extractTags(packages: Package[]): string[] {
 // ---------------------------------------------------------------------------
 
 export function getPackageManifestUrl(tooth: string, version: string): string {
-  return `${PACKAGE_REGISTRY_URL}/github.com/${tooth}@${version}/tooth.json`;
+  return `${PACKAGE_REGISTRY_URL}/github.com/${normalizeTooth(tooth)}@${version}/tooth.json`;
 }
 
 export function getReadmeUrl(tooth: string, version: string): string | null {
   const tag = `v${version}`;
-  return `https://raw.githubusercontent.com/${tooth}/${tag}/README.md`;
+  return `https://raw.githubusercontent.com/${normalizeTooth(tooth)}/${tag}/README.md`;
 }

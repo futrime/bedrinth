@@ -12,6 +12,7 @@ import {
   fetchPackageIndex,
   getPackageManifestUrl,
   getReadmeUrl,
+  normalizeTooth,
   REVALIDATE_SECONDS,
 } from "@/lib/packages";
 
@@ -54,19 +55,19 @@ function buildPackageUrl(tooth: string, version?: string, variant?: string) {
 function resolvePackageByTooth(packageEntries: Record<string, import("@/types").RawPackageEntry>, tooth: string) {
   const exact = packageEntries[tooth];
   if (exact) {
-    return { tooth, pkg: exact };
+    return { tooth: normalizeTooth(tooth), pkg: exact };
   }
 
-  const normalizedTooth = tooth.toLowerCase();
+  const normalizedTooth = normalizeTooth(tooth).toLowerCase();
   const matchedTooth = Object.keys(packageEntries).find(
-    (key) => key.toLowerCase() === normalizedTooth,
+    (key) => normalizeTooth(key).toLowerCase() === normalizedTooth,
   );
 
   if (!matchedTooth) {
     return null;
   }
 
-  return { tooth: matchedTooth, pkg: packageEntries[matchedTooth] };
+  return { tooth: normalizeTooth(matchedTooth), pkg: packageEntries[matchedTooth] };
 }
 
 function getSortedVariants(pkg: import("@/types").RawPackageEntry): string[] {
@@ -277,7 +278,7 @@ export default async function PackageDetailPage({
               <div className="pt-4">
                 <Button className="w-full" asChild>
                   <a
-                    href={`https://${tooth}`}
+                    href={`https://github.com/${normalizeTooth(tooth)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-center gap-2"
