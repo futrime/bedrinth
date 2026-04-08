@@ -33,6 +33,7 @@ export function PackageCard({ pkg }: Readonly<PackageCardProps>) {
                 <Link
                   href={`/packages/${pkg.tooth}`}
                   className="hover:underline"
+                  prefetch={false}
                 >
                   {pkg.info.name}
                 </Link>
