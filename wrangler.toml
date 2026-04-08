@@ -2,7 +2,7 @@
 main = ".open-next/worker.js"
 name = "bedrinth"
 # Set this to today's date
-compatibility_date = "2026-04-08"
+compatibility_date = "2026-04-07"
 compatibility_flags = ["nodejs_compat"]
 
 [assets]

@@ -50,6 +50,7 @@ export function Sidebar({ tags, selectedTags, currentParams }: SidebarProps) {
                     <Link
                       key={tag}
                       href={buildTagUrl(tag, selectedTags, currentParams)}
+                      prefetch={false}
                     >
                       <Badge
                         variant={isSelected ? "default" : "outline"}
@@ -72,6 +73,7 @@ export function Sidebar({ tags, selectedTags, currentParams }: SidebarProps) {
               <Link
                 key={tag}
                 href={buildTagUrl(tag, selectedTags, currentParams)}
+                prefetch={false}
               >
                 <Badge
                   variant={isSelected ? "default" : "outline"}

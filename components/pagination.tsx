@@ -38,6 +38,7 @@ export function Pagination({
       {currentPage > 1 ? (
         <Link
           href={buildUrl(currentPage - 1)}
+          prefetch={false}
           className="inline-flex items-center justify-center w-9 h-9 rounded-md border border-gray-200 dark:border-gray-800 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
           aria-label="Previous page"
         >
@@ -61,6 +62,7 @@ export function Pagination({
           <Link
             key={p}
             href={buildUrl(p)}
+            prefetch={false}
             className={`inline-flex items-center justify-center w-9 h-9 rounded-md text-sm font-medium transition-colors ${
               p === currentPage
                 ? "bg-gray-900 text-white dark:bg-gray-50 dark:text-gray-900"
@@ -77,6 +79,7 @@ export function Pagination({
       {currentPage < totalPages ? (
         <Link
           href={buildUrl(currentPage + 1)}
+          prefetch={false}
           className="inline-flex items-center justify-center w-9 h-9 rounded-md border border-gray-200 dark:border-gray-800 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
           aria-label="Next page"
         >

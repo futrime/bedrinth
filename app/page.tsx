@@ -98,6 +98,7 @@ export default async function IndexPage({ searchParams }: PageProps) {
                   <Link
                     key={opt.value}
                     href={buildUrl({ sort: opt.value, page: "1" })}
+                    prefetch={false}
                     className={`inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 h-9 px-3 ${
                       sortBy === opt.value
                         ? "bg-gray-900 text-white dark:bg-gray-50 dark:text-gray-900"
