@@ -1,8 +1,5 @@
 import FlexSearch from "flexsearch";
-import {
-  Package,
-  PackageIndex,
-} from "@/types";
+import { Package, PackageIndex } from "@/types";
 
 const PACKAGE_INDEX_URL = "https://lipr.levimc.org/index.json";
 const PACKAGE_REGISTRY_URL = "https://lipr.levimc.org";
@@ -13,6 +10,12 @@ const SEARCH_LIMIT = 1000;
 const SEARCH_NAME_WEIGHT = 3;
 const SEARCH_TAG_WEIGHT = 2;
 const MAX_RANK_BASE = 1000;
+
+// Reuse a built search index across warm Worker requests to avoid rebuilding
+// FlexSearch on every request.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let cachedSearchIndex: any | null = null;
+let cachedSearchFingerprint = "";
 
 export function normalizePackageIndex(index: PackageIndex): Package[] {
   return Object.entries(index.packages).map(([tooth, pkg]) => ({
@@ -33,31 +36,25 @@ export function normalizePackageIndex(index: PackageIndex): Package[] {
 
 export type SortOption = "relevance" | "updated" | "stars";
 
-// ---------------------------------------------------------------------------
-// Data Fetching
-// ---------------------------------------------------------------------------
+function buildSearchFingerprint(packages: Package[]): string {
+  if (packages.length === 0) return "0";
 
-export async function fetchPackageIndex(): Promise<PackageIndex> {
-  const res = await fetch(PACKAGE_INDEX_URL, { next: { revalidate: REVALIDATE_SECONDS } });
-  if (!res.ok) throw new Error("Failed to fetch package index");
-  return res.json();
+  const first = packages[0];
+  const last = packages[packages.length - 1];
+  return [
+    String(packages.length),
+    first.tooth,
+    first.updated,
+    last.tooth,
+    last.updated,
+  ].join("|");
 }
 
-export async function fetchPackages(): Promise<Package[]> {
-  const index = await fetchPackageIndex();
-  return normalizePackageIndex(index);
-}
-
-// ---------------------------------------------------------------------------
-// Search  (FlexSearch, built per-request)
-// ---------------------------------------------------------------------------
-
-export function searchPackages(
-  packages: Package[],
-  query: string,
-): { results: Package[]; scores: Map<string, number> } {
-  if (!query.trim()) {
-    return { results: packages, scores: new Map() };
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function getSearchIndex(packages: Package[]): any {
+  const nextFingerprint = buildSearchFingerprint(packages);
+  if (cachedSearchIndex && cachedSearchFingerprint === nextFingerprint) {
+    return cachedSearchIndex;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -76,6 +73,42 @@ export function searchPackages(
   for (const pkg of packages) {
     idx.add({ tooth: pkg.tooth, info: pkg.info });
   }
+
+  cachedSearchIndex = idx;
+  cachedSearchFingerprint = nextFingerprint;
+  return idx;
+}
+
+// ---------------------------------------------------------------------------
+// Data Fetching
+// ---------------------------------------------------------------------------
+
+export async function fetchPackageIndex(): Promise<PackageIndex> {
+  const res = await fetch(PACKAGE_INDEX_URL, {
+    next: { revalidate: REVALIDATE_SECONDS },
+  });
+  if (!res.ok) throw new Error("Failed to fetch package index");
+  return res.json();
+}
+
+export async function fetchPackages(): Promise<Package[]> {
+  const index = await fetchPackageIndex();
+  return normalizePackageIndex(index);
+}
+
+// ---------------------------------------------------------------------------
+// Search  (FlexSearch, index reused across warm requests)
+// ---------------------------------------------------------------------------
+
+export function searchPackages(
+  packages: Package[],
+  query: string,
+): { results: Package[]; scores: Map<string, number> } {
+  if (!query.trim()) {
+    return { results: packages, scores: new Map() };
+  }
+
+  const idx = getSearchIndex(packages);
 
   const searchResults = idx.search(query, { limit: SEARCH_LIMIT });
   const scores = new Map<string, number>();
