@@ -306,7 +306,7 @@ export default async function PackageDetailPage({
                   const isCurrent = variant === selectedVariant;
                   const variantUrl = buildPackageUrl(tooth, targetVersion, variant);
                   return (
-                    <Link key={variant} href={variantUrl}>
+                    <Link key={variant} href={variantUrl} prefetch={false}>
                       <Badge
                         variant={isCurrent ? "default" : "outline"}
                         className={`font-mono cursor-pointer transition-colors ${isCurrent ? "" : "hover:bg-gray-100 dark:hover:bg-gray-800"}`}
@@ -333,7 +333,7 @@ export default async function PackageDetailPage({
                     const isCurrent = version === selectedVersion;
                     const versionUrl = buildPackageUrl(tooth, version, selectedVariant);
                     return (
-                      <Link key={version} href={versionUrl}>
+                      <Link key={version} href={versionUrl} prefetch={false}>
                         <Badge
                           variant={isCurrent ? "default" : "outline"}
                           className={`font-mono cursor-pointer transition-colors ${isCurrent ? "" : "hover:bg-gray-100 dark:hover:bg-gray-800"}`}
