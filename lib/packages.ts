@@ -36,6 +36,11 @@ export function normalizePackageIndex(index: PackageIndex): Package[] {
 
 export type SortOption = "relevance" | "updated" | "stars";
 
+function getUpdatedTimestamp(updated: string): number {
+  const ts = Date.parse(updated);
+  return Number.isNaN(ts) ? 0 : ts;
+}
+
 function buildSearchFingerprint(packages: Package[]): string {
   if (packages.length === 0) return "0";
 
@@ -163,7 +168,7 @@ export function sortPackages(
       return b.stars - a.stars;
     }
     // "updated"
-    return new Date(b.updated).getTime() - new Date(a.updated).getTime();
+    return getUpdatedTimestamp(b.updated) - getUpdatedTimestamp(a.updated);
   });
 }
 
